@@ -1,0 +1,8 @@
+CREATE TABLE bookings (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  event_id INTEGER NOT NULL,
+  booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id),
+  CONSTRAINT fk_event FOREIGN KEY (event_id) REFERENCES events(id)
+);
