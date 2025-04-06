@@ -234,7 +234,6 @@ Attraverso una relazione uno-a-molti (`hasMany`), ogni location può ospitare pi
 Il modello `Booking` ha due relazioni molti-a-uno:
 
 - Relazione con `User`: Ogni prenotazione è associata a un singolo utente, attraverso la chiave esterna `user_id`. Con il metodo `belongsTo`, è possibile accedere all'utente che ha effettuato la prenotazione.
-
 - Relazione con `Event`: Ogni prenotazione è associata a un singolo evento, attraverso la chiave esterna `event_id`. Con il metodo `belongsTo`, è possibile accedere all'evento per cui è stata fatta la prenotazione.
 
 Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che sugli eventi associati a ciascuna prenotazione.
@@ -292,9 +291,9 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`200 Ok` → Token restituito
-`401 Unauthorized` → Credenziali non valide
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Token restituito
+- `401 Unauthorized` → Credenziali non valide
+- `500 Internal Server Error` → Errore generico
 
 #### POST `/auth/change-password`
 
@@ -306,10 +305,10 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`200 Ok` → Password aggiornata
-`401 Unauthorized` → Password vecchia errata
-`404 Not Found` → Utente non trovato
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Password aggiornata
+- `401 Unauthorized` → Password vecchia errata
+- `404 Not Found` → Utente non trovato
+- `500 Internal Server Error` → Errore generico
 
 #### POST `/auth/restore-user`
 
@@ -319,9 +318,9 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`200 Ok` → Utente ripristinato
-`404 Not Found` → Utente non trovato o non eliminato
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Utente ripristinato
+- `404 Not Found` → Utente non trovato o non eliminato
+- `500 Internal Server Error` → Errore generico
 
 ---
 
@@ -343,30 +342,30 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 #### GET `/api/users`
 
-`200 Ok` → Lista utenti
-`500 Internal Server Error` → Errore di recupero
+- `200 Ok` → Lista utenti
+- `500 Internal Server Error` → Errore di recupero
 
 #### GET `/api/users/:id`
 
-`200 Ok` → Utente trovato
-`404 Not Found` → Nessun utente con quell'id
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Utente trovato
+- `404 Not Found` → Nessun utente con quell'id
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/users/email/:email`
 
-`200 Ok` → Utente trovato
-`404 Not Found` → Nessun utente con quell'email
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Utente trovato
+- `404 Not Found` → Nessun utente con quell'email
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/users/role/:role`
 
-`200 Ok` → Lista utenti filtrati per ruolo
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista utenti filtrati per ruolo
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/users/inactive/:days`
 
-`200 Ok` → Lista utenti inattivi
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista utenti inattivi
+- `500 Internal Server Error` → Errore generico
 
 #### PUT `/api/users/:id`
 
@@ -377,20 +376,20 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`200 Ok` → Utente aggiornato
-`404 Not Found` → Nessun utente con quell'id
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Utente aggiornato
+- `404 Not Found` → Nessun utente con quell'id
+- `500 Internal Server Error` → Errore generico
 
 #### PUT `/api/users/last-login/:id`
 
-`200 Ok` → Login aggiornato
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Login aggiornato
+- `500 Internal Server Error` → Errore generico
 
 #### DELETE `/api/users/:id`
 
-`204 No Content` → Utente eliminato
-`404 Not Found` → Nessun utente con quell'id
-`500 Internal Server Error` → Errore generico
+- `204 No Content` → Utente eliminato
+- `404 Not Found` → Nessun utente con quell'id
+- `500 Internal Server Error` → Errore generico
 
 ---
 
@@ -410,19 +409,19 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 #### GET `/api/events/upcoming`
 
-`200 Ok` → Lista eventi futuri
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista eventi futuri
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/events/:id`
 
-`200 Ok` → Evento trovato
-`404 Not Found` → Nessun evento trovato
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Evento trovato
+- `404 Not Found` → Nessun evento trovato
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/events`
 
-`200 Ok` → Lista completa eventi
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista completa eventi
+- `500 Internal Server Error` → Errore generico
 
 #### POST `/api/events`
 
@@ -439,8 +438,8 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`201 Created` → Eventi creato con successo
-`500 Internal Server Error` → Errore generico
+- `201 Created` → Eventi creato con successo
+- `500 Internal Server Error` → Errore generico
 
 #### PUT `/api/events/:id`
 
@@ -451,15 +450,15 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`200 Ok` → Evento aggiornato
-`404 Not Found` → Evento non trovato
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Evento aggiornato
+- `404 Not Found` → Evento non trovato
+- `500 Internal Server Error` → Errore generico
 
 #### DELETE `/api/events/:id`
 
-`200 Ok` → Evento eliminato
-`404 Not Found` → Evento non trovato
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Evento eliminato
+- `404 Not Found` → Evento non trovato
+- `500 Internal Server Error` → Errore generico
 
 ---
 
@@ -480,31 +479,31 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 #### GET `/api/locations`
 
-`200 Ok` → Lista completa locazioni
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista completa locazioni
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/locations/:id`
 
-`200 Ok` → Locazione trovata
-`404 Not Found` → Locazione non trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Locazione trovata
+- `404 Not Found` → Locazione non trovata
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/locations/by-city/:city`
 
-`200 Ok` → Lista locazioni per città
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista locazioni per città
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/locations/closest?latitude=X&longitude=Y`
 
-`200 Ok` → Locazione più vicina
-`404 Not Found` → Nessuna locazione trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Locazione più vicina
+- `404 Not Found` → Nessuna locazione trovata
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/locations/closest?latitude=X&longitude=Y&radius=Z`
 
-`200 Ok` → Lista locazioni vicine
-`404 Not Found` → Nessuna locazione trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista locazioni vicine
+- `404 Not Found` → Nessuna locazione trovata
+- `500 Internal Server Error` → Errore generico
 
 #### POST `/api/locations`
 
@@ -521,9 +520,9 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`201 Created` → Locazione creata
-`400 Not Found` → Indirizzo duplicato
-`500 Internal Server Error` → Errore generico
+- `201 Created` → Locazione creata
+- `400 Not Found` → Indirizzo duplicato
+- `500 Internal Server Error` → Errore generico
 
 #### PUT `/api/locations/:id`
 
@@ -536,15 +535,15 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`200 Ok` → Locazione aggiornata
-`404 Not Found` → Locazione non trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Locazione aggiornata
+- `404 Not Found` → Locazione non trovata
+- `500 Internal Server Error` → Errore generico
 
 #### DELETE `/api/locations/:id`
 
-`204 No Content` → Locazione eliminata
-`404 Not Found` → Locazione non trovata
-`500 Internal Server Error` → Errore generico
+- `204 No Content` → Locazione eliminata
+- `404 Not Found` → Locazione non trovata
+- `500 Internal Server Error` → Errore generico
 
 ---
 
@@ -564,26 +563,26 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 #### GET `/api/bookings`
 
-`200 Ok` → Lista completa prenotazioni
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista completa prenotazioni
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/bookings/user`
 
-`200 Ok` → Lista prenotazioni dell'utente
-`404 Not Found` → Nessuna prenotazioni trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista prenotazioni dell'utente
+- `404 Not Found` → Nessuna prenotazioni trovata
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/bookings/event/:eventId`
 
-`200 Ok` → Lista prenotazioni per evento
-`404 Not Found` → Nessuna prenotazioni trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Lista prenotazioni per evento
+- `404 Not Found` → Nessuna prenotazioni trovata
+- `500 Internal Server Error` → Errore generico
 
 #### GET `/api/bookings/:id`
 
-`200 Ok` → Prenotazione trovata
-`404 Not Found` → Prenotazione non trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Prenotazione trovata
+- `404 Not Found` → Prenotazione non trovata
+- `500 Internal Server Error` → Errore generico
 
 #### POST `/api/bookings`
 
@@ -597,8 +596,8 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`201 Created` → Prenotazione creata
-`500 Internal Server Error` → Errore generico
+- `201 Created` → Prenotazione creata
+- `500 Internal Server Error` → Errore generico
 
 #### PUT `/api/bookings/:id/status`
 
@@ -608,12 +607,12 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 }
 ```
 
-`200 Ok` → Stato aggiornato
-`404 Not Found` → Prenotazione non trovata
-`500 Internal Server Error` → Errore generico
+- `200 Ok` → Stato aggiornato
+- `404 Not Found` → Prenotazione non trovata
+- `500 Internal Server Error` → Errore generico
 
 #### DELETE `/api/bookings/:id`
 
-`204 No Content` → Prenotazione eliminata
-`404 Not Found` → Prenotazione non trovata
-`500 Internal Server Error` → Errore generico
+- `204 No Content` → Prenotazione eliminata
+- `404 Not Found` → Prenotazione non trovata
+- `500 Internal Server Error` → Errore generico
