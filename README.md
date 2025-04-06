@@ -79,7 +79,7 @@ karavoice-backend/
 
 ## 🧱 Modelli Dati principali
 
-### 🧍 Utenti
+### 🧍 Modello utente
 
 | Campo             | Tipo     | Descrizione            |
 | ----------------- | -------- | ---------------------- |
@@ -100,7 +100,7 @@ karavoice-backend/
 - `password_hashed`: non può essere vuoto
 - `role`: deve essere `"user"` o `"admin"` (default: `"user"`)
 
-#### Hook
+#### Hook utente
 
 - `beforeCreate`: hash della password prima della creazione dell'utente
 - `beforeUpdate`: hash della password se modificata
@@ -119,14 +119,14 @@ Questa relazione è definita con il metodo `hasMany`, dove l'utente funge da ent
 - `findByRole(role)` → restituisce tutti gli utenti con un determinato ruolo
 - `findInactiveUsers(days)` → restituisce utenti che non effettuano login da $n$ giorni
 
-##### Note utente
+#### Note utente
 
 - **Autenticazione**: integrazione con JWT
 - **Sicurezza**: hashing con `bcrypt`, validazioni forti
 - **Soft delete**: attivo con `paranoid: true`
 - **Timestamps**: attivi (`createdAt`, `updatedAt`, `deleteAt`)
 
-### 🎤 Eventi
+### 🎤 Modello evento
 
 | Campo         | Tipo     | Descrizione                                |
 | ------------- | -------- | ------------------------------------------ |
@@ -164,14 +164,14 @@ Queste relazioni permettono di ricostruire facilmente il contesto completo dell�
 - `findUpcomingEvents()` → Restituisce tutti gli eventi futuri ordinati per data crescente. Include anche i dati della location associata
 - `findByLocation(locationId)` → Restituisce tutti gli eventi collegati a una determinata location
 
-##### Note evento
+#### Note evento
 
 - **Indicizzazione intelligente** su `name + date` per velocizzare le ricerche per nome e data.
 - **Collegamenti ottimizzati** su `location_id` per join efficienti.
 - **Soft delete** attivo (`paranoid: true`) per non perdere eventi eliminati ma recuperarli all’occorrenza.
 - **Timestamp automatici** (`createdAt`, `updatedAt`, `deletedAt`) per tracciare ogni modifica.
 
-### 📍 Locazioni
+### 📍 Modello locazione
 
 | Campo       | Tipo      | Descrizione                                    |
 | ----------- | --------- | ---------------------------------------------- |
@@ -205,13 +205,13 @@ Attraverso una relazione uno-a-molti (`hasMany`), ogni location può ospitare pi
 - `findByCity(city)` → Recupera tutte le location presenti in una determinata città. Utile per filtri geografici lato utente o backend
 - `findNearby(latitude, longitude, radius)` → Ritorna tutte le location all'interno di un certo raggio (in km) rispetto a una posizione geografica. Ideale per trovare locali "vicino a me" su mappe o app mobile
 
-##### Note locazione
+#### Note locazione
 
 - **Indicizzazione geografica avanzata** su `city`, `province`, `zip_code`, oltre che su `latitude` / `longitude`, per supportare filtri veloci e ricerche geospaziali.
 - **Soft delete** attivo (`paranoid: true`) per non eliminare definitivamente i dati e consentire recuperi.
 - **Timestamps automatici** (`createdAt`, `updatedAt`, `deletedAt`) attivi.
 
-### 📅 Prenotazioni
+### 📅 Modello prenotazione
 
 | Campo          | Tipo      | Descrizione                                                                            |
 | -------------- | --------- | -------------------------------------------------------------------------------------- |
@@ -246,7 +246,7 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 - `updateStatus(bookingId, status)` → Aggiorna lo stato di una prenotazione. Accetta come parametri l'ID della prenotazione e il nuovo stato desiderato (`pending`, `confirmed`, `canceled`).
   Se lo stato non è valido o la prenotazione non esiste, l'operazione fallirà con un messaggio di errore
 
-##### Note prenotazione
+#### Note prenotazione
 
 - **Indicizzazione**: È presente un indice univoco su `user_id` e `event_id`, impedendo la duplicazione delle prenotazioni per lo stesso utente su uno stesso evento.
 - **Soft delete** attivo (`paranoid: true`) per non eliminare definitivamente i dati.
@@ -256,7 +256,7 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 ## 📡 API Endpoints
 
-### 🔐 Autenticazione
+### 🔐 Rotte autenticazione
 
 | Metodo | Endpoint                | Descrizione                                    |
 | ------ | ----------------------- | ---------------------------------------------- |
@@ -325,7 +325,7 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 ---
 
-### 👥 Utenti
+### 👥 Rotte utenti
 
 | Metodo | Endpoint                    | Descrizione                                  | Autenticazione |
 | ------ | --------------------------- | -------------------------------------------- | -------------- |
@@ -394,7 +394,7 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 ---
 
-### 🎤 Events
+### 🎤 Rotte eventi
 
 | Metodo | Endpoint               | Descrizione                         | Autenticazione |
 | ------ | ---------------------- | ----------------------------------- | -------------- |
@@ -463,7 +463,7 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 ---
 
-### 📍 Locazioni
+### 📍 Rotte locazioni
 
 | Metodo | Endpoint                       | Descrizione                                                 | Autenticazione |
 | ------ | ------------------------------ | ----------------------------------------------------------- | -------------- |
@@ -548,7 +548,7 @@ Con queste relazioni, è possibile ottenere informazioni sia sugli utenti che su
 
 ---
 
-### 📅 Prenotazioni
+### 📅 Rotte prenotazioni
 
 | Metodo | Endpoint                       | Descrizione                                 | Autenticazione |
 | ------ | ------------------------------ | ------------------------------------------- | -------------- |
