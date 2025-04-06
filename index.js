@@ -13,11 +13,12 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
-const app = express(); // Configura l'app
+const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(express.json());
+app.use(express.json()); // Per il parsing del corpo delle richieste JSON
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -25,9 +26,13 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
-);
-app.use(helmet());
-app.use(morgan("dev"));
+); // Abilita CORS per il frontend
+
+app.use(express.urlencoded({ extended: true })); // Per il parsing del corpo delle richieste URL-encoded
+
+app.use(helmet()); // Aggiunge intestazioni di sicurezza per proteggere l'app
+
+app.use(morgan("dev")); // Log delle richieste HTTP per il debug
 
 app.use(
   "/uploads",
@@ -37,7 +42,7 @@ app.use(
       res.set("Access-Control-Allow-Origin", "http://localhost:5173");
     },
   })
-);
+); // Serve i file statici dalla cartella "uploads"
 
 // Rotte
 app.use("/api/events", eventRoutes);
@@ -53,8 +58,9 @@ app.get("/", (_, res) => {
     database: "connesso",
     date: new Date().toLocaleDateString(),
   });
-});
+}); // Rotta di test per verificare che il server sia in esecuzione
 
+// Gestione degli errori
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({

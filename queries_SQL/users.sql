@@ -1,8 +1,0 @@
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR(100) UNIQUE NOT NULL,
-  email VARCHAR(100) UNIQUE NOT NULL,
-  password_hashed VARCHAR(255) NOT NULL,
-  role VARCHAR(50) CHECK (role IN ('user', 'admin')) NOT NULL,
-  creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);

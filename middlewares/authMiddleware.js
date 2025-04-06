@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+// Middleware per autenticare l'utente
 exports.authenticate = (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
@@ -15,6 +16,7 @@ exports.authenticate = (req, res, next) => {
   }
 };
 
+// Middleware per verificare se l'utente è un admin
 exports.checkAdmin = () => (req, res, next) => {
   if (req.user.role !== "admin") {
     return res

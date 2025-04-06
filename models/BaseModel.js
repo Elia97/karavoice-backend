@@ -49,7 +49,7 @@ class BaseModel extends Model {
       return await this.create(data);
     } catch (error) {
       console.error(`[BaseModel] Error during create: ${error.message}`);
-      throw error; // Rilancia l'errore per una gestione a livello superiore
+      throw error;
     }
   }
 

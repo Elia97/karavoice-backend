@@ -9,7 +9,7 @@ class Booking extends BaseModel {
     super.init(
       {
         user_id: {
-          type: DataTypes.UUID, // Utilizza UUID per coerenza con il modello User
+          type: DataTypes.UUID,
           allowNull: false,
           references: {
             model: "users",
@@ -19,7 +19,7 @@ class Booking extends BaseModel {
           onUpdate: "CASCADE",
         },
         event_id: {
-          type: DataTypes.UUID, // Utilizza UUID per coerenza con il modello Event
+          type: DataTypes.UUID,
           allowNull: false,
           references: {
             model: "events",
@@ -64,7 +64,7 @@ class Booking extends BaseModel {
         indexes: [
           {
             unique: true,
-            fields: ["user_id", "event_id"], // Previene duplicati per lo stesso evento
+            fields: ["user_id", "event_id"],
           },
         ],
       }
