@@ -6,25 +6,30 @@ exports.registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
+    // Controlla se tutti i campi sono presenti
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required"})
+    }
+
     // Controlla se l'email è già in uso
-    const existingUser = await User.findOne({ where: { email } });
+    const existingUser = await User.findByEmail(email);
     if (existingUser) {
       return res.status(409).json({ message: "Email already registered" });
     }
 
     // Crea un nuovo utente
-    const newUser = await User.create({
+    const newUser = await User.createEntry({
       name,
       email,
       password_hashed: password,
       role: role || "user", // Ruolo di default
     });
 
-    res
+    return res
       .status(201)
       .json({ message: "User successfully registered", user: newUser });
   } catch (error) {
-    res
+    return res
       .status(500)
       .json({ message: "Error during registration", error: error.message });
   }
