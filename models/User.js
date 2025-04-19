@@ -30,7 +30,7 @@ class User extends BaseModel {
             },
           },
         },
-        password_hashed: {
+        password: {
           type: DataTypes.STRING(255),
           allowNull: false,
           validate: {

@@ -1,36 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const { authenticate, checkAdmin } = require("../middlewares/authMiddleware");
+const {
+  validateToken,
+  validateTokenAdmin,
+} = require("../middlewares/authMiddleware");
+const { validateUser } = require("../middlewares/userMiddleware");
 
 // Rotte per gli utenti
-router.get("/", authenticate, checkAdmin(), userController.getAllUsers);
+router.get("/", validateTokenAdmin, userController.getAllUsers);
 
-router.get("/:id", authenticate, userController.getUserById);
+router.get("/:id", validateToken, userController.getUserById);
 
-router.get(
-  "/email/:email",
-  authenticate,
-  checkAdmin(),
-  userController.getUserByEmail
-);
+router.get("/email/:email", validateTokenAdmin, userController.getUserByEmail);
 
-router.get(
-  "/role/:role",
-  authenticate,
-  checkAdmin(),
-  userController.getUsersByRole
-);
+router.get("/role/:role", validateTokenAdmin, userController.getUsersByRole);
 
 router.get(
   "/inactive/:days",
-  authenticate,
-  checkAdmin(),
+  validateTokenAdmin,
   userController.getInactiveUsers
 );
 
-router.put("/:id", authenticate, userController.updateUser);
-router.put("/last-login/:id", authenticate, userController.updateLastLogin);
-router.delete("/:id", authenticate, userController.deleteUser);
+router.put("/:id", validateToken, validateUser, userController.updateUser);
+router.delete("/:id", validateToken, userController.deleteUser);
 
 module.exports = router;

@@ -6,28 +6,17 @@ exports.registerUser = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Controlla se tutti i campi sono presenti
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields are required"})
-    }
-
-    // Controlla se l'email è già in uso
-    const existingUser = await User.findByEmail(email);
-    if (existingUser) {
-      return res.status(409).json({ message: "Email already registered" });
-    }
-
     // Crea un nuovo utente
     const newUser = await User.createEntry({
       name,
       email,
-      password_hashed: password,
+      password,
       role: role || "user", // Ruolo di default
     });
 
     return res
       .status(201)
-      .json({ message: "User successfully registered", user: newUser });
+      .json({ message: "Utente registrato con successo", user: newUser });
   } catch (error) {
     return res
       .status(500)
@@ -40,23 +29,22 @@ exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Trova l'utente per email
     const user = await User.findByEmail(email);
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Verifica la password usando il metodo isPasswordValid nel modello
     const isPasswordValid = await user.isPasswordValid(password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Genera il token JWT
+    await User.updateLastLogin(user.id);
+
     const token = jwt.sign(
       { id: user.id, role: user.role },
-      process.env.JWT_SECRET // Utilizza la variabile d'ambiente
-      // { expiresIn: process.env.JWT_EXPIRES_IN || "1d" } // Imposta la scadenza, usa il valore di default se non specificato
+      process.env.JWT_SECRET, // Utilizza la variabile d'ambiente
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1d" } // Imposta la scadenza, usa il valore di default se non specificato
     );
 
     res.status(200).json({ message: "Login successful", token });
@@ -89,6 +77,31 @@ exports.changePassword = async (req, res) => {
     res.status(200).json({ message: "Password successfully changed" });
   } catch (error) {
     res.status(500).json({ message: "Error during password change", error });
+  }
+};
+
+// Aggiornare il profilo
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, email, role } = req.body;
+    const userId = req.user.id; // ID dell'utente autenticato
+
+    // Trova l'utente per ID
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Aggiorna i campi dell'utente
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.role = role || user.role;
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile successfully updated", user });
+  } catch (error) {
+    res.status(500).json({ message: "Error during profile update", error });
   }
 };
 

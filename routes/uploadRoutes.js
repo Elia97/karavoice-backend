@@ -2,7 +2,10 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const { authenticate, checkAdmin } = require("../middlewares/authMiddleware");
+const {
+  validateToken,
+  validateTokenAdmin,
+} = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -39,8 +42,7 @@ const upload = multer({
 router.post(
   "/upload",
   upload.single("image"),
-  authenticate,
-  checkAdmin(), // Solo il ruolo admin è autorizzato
+  validateTokenAdmin, // Solo il ruolo admin è autorizzato
   async (req, res) => {
     try {
       const file = req.file;

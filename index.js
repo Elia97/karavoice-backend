@@ -18,6 +18,9 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json()); // Per il parsing del corpo delle richieste JSON
+app.use(express.urlencoded({ extended: true })); // Per il parsing del corpo delle richieste URL-encoded
+app.use(helmet()); // Aggiunge intestazioni di sicurezza per proteggere l'app
+app.use(morgan("dev")); // Log delle richieste HTTP per il debug
 
 app.use(
   cors({
@@ -27,12 +30,6 @@ app.use(
     credentials: true,
   })
 ); // Abilita CORS per il frontend
-
-app.use(express.urlencoded({ extended: true })); // Per il parsing del corpo delle richieste URL-encoded
-
-app.use(helmet()); // Aggiunge intestazioni di sicurezza per proteggere l'app
-
-app.use(morgan("dev")); // Log delle richieste HTTP per il debug
 
 app.use(
   "/uploads",

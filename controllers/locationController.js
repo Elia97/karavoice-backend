@@ -43,14 +43,6 @@ exports.getLocationById = async (req, res) => {
 
 exports.createLocation = async (req, res) => {
   try {
-    const { address } = req.body;
-
-    // Verifica duplicati
-    const isDuplicate = await Location.isDuplicateAddress(address);
-    if (isDuplicate) {
-      return res.status(400).json({ message: "Indirizzo già registrato" });
-    }
-
     const location = await Location.create(req.body); // Crea una nuova locazione
     res.status(201).json(location);
   } catch (error) {

@@ -121,19 +121,3 @@ exports.getInactiveUsers = async (req, res) => {
     });
   }
 };
-
-/**
- * Aggiorna il timestamp dell'ultimo login
- */
-exports.updateLastLogin = async (req, res) => {
-  try {
-    const { id } = req.params;
-    await User.updateLastLogin(id);
-    res.status(200).json({ message: "Ultimo login aggiornato" });
-  } catch (error) {
-    res.status(500).json({
-      message: "Errore durante l'aggiornamento dell'ultimo login",
-      error: error.message,
-    });
-  }
-};
