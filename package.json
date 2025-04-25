@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "jest"
+    "test:unit": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit --runInBand --testPathPattern=unit",
+    "test:integration": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit  --runInBand --testPathPattern=integration"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",
+    "slugify": "^1.6.6",
     "uuid": "^11.0.5"
   },
   "devDependencies": {

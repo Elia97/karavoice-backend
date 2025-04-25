@@ -28,13 +28,22 @@ class Event extends BaseModel {
             },
           },
         },
-        category: {
-          type: DataTypes.STRING(50),
+        category_id: {
+          type: DataTypes.UUID, // Usa UUID per coerenza con il modello Location
           allowNull: false,
+          references: {
+            model: "categories", // Nome della tabella di riferimento
+            key: "id",
+          },
+          onDelete: "CASCADE",
+          onUpdate: "CASCADE",
+        },
+        featured: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
           validate: {
-            isIn: {
-              args: [["karaoke", "dj set", "live music"]],
-              msg: "La categoria deve essere una tra: 'karaoke', 'dj set', 'live music'.",
+            isBoolean: {
+              msg: "Il campo 'featured' deve essere un valore booleano.",
             },
           },
         },
@@ -116,6 +125,12 @@ class Event extends BaseModel {
       as: "location",
     });
 
+    // Relazione con Category
+    this.belongsTo(models.Category, {
+      foreignKey: "category_id",
+      as: "category",
+    });
+
     // Relazione con Booking
     this.hasMany(models.Booking, {
       foreignKey: "event_id",
@@ -134,7 +149,26 @@ class Event extends BaseModel {
         },
       },
       order: [["date", "ASC"]],
-      include: [{ model: this.sequelize.models.Location, as: "location" }],
+      include: [
+        { model: this.sequelize.models.Location, as: "location" },
+        { model: this.sequelize.models.Category, as: "category" },
+      ],
+    });
+  }
+
+  /**
+   * Metodo per trovare eventi in evidenza
+   */
+  static async findFeaturedEvents() {
+    return await this.findAllEntries({
+      where: {
+        featured: true,
+      },
+      order: [["date", "ASC"]],
+      include: [
+        { model: this.sequelize.models.Location, as: "location" },
+        { model: this.sequelize.models.Category, as: "category" },
+      ],
     });
   }
 
@@ -146,7 +180,10 @@ class Event extends BaseModel {
       where: {
         location_id: locationId,
       },
-      include: [{ model: this.sequelize.models.Location, as: "location" }],
+      include: [
+        { model: this.sequelize.models.Location, as: "location" },
+        { model: this.sequelize.models.Category, as: "category" },
+      ],
     });
   }
 }

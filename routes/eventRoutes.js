@@ -8,9 +8,8 @@ const {
 
 // Rotte pubbliche
 router.get("/upcoming", eventController.getUpcomingEvents); // Ottieni eventi futuri
-
-// Rotte protette (tutti gli utenti)
-router.get("/:id", validateToken, eventController.getEventById); // Ottieni un evento specifico tramite ID
+router.get("/featured", eventController.getFeaturedEvents); // Ottieni eventi in evidenza
+router.get("/:id", eventController.getEventById); // Ottieni un evento specifico tramite ID
 
 // Rotte protette (solo admin)
 router.get("/", validateTokenAdmin, eventController.getAllEvents); // Ottieni tutti gli eventi

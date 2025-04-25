@@ -1,9 +1,12 @@
-const { Event, Location } = require("../models");
+const { Event, Location, Category } = require("../models");
 
 exports.getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAllEntries({
-      include: [{ model: Location, as: "location" }],
+      include: [
+        { model: Location, as: "location" },
+        { model: Category, as: "category" },
+      ],
     });
     res.status(200).json(events);
   } catch (error) {
@@ -27,10 +30,25 @@ exports.getUpcomingEvents = async (req, res) => {
   }
 };
 
+exports.getFeaturedEvents = async (req, res) => {
+  try {
+    const events = await Event.findFeaturedEvents();
+    res.status(200).json(events);
+  } catch (error) {
+    res.status(500).json({
+      message: "Errore nel recupero degli eventi in evidenza",
+      error: error.message,
+    });
+  }
+};
+
 exports.getEventById = async (req, res) => {
   try {
     const event = await Event.findEntryById(req.params.id, {
-      include: [{ model: Location, as: "location" }],
+      include: [
+        { model: Location, as: "location" },
+        { model: Category, as: "category" },
+      ],
     }); // Usa il metodo base
     if (!event) {
       return res.status(404).json({ message: "Evento non trovato" });

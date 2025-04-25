@@ -3,6 +3,7 @@ const db = require("./models/index");
 const {
   eventRoutes,
   locationRoutes,
+  categoryRoutes,
   bookingRoutes,
   userRoutes,
   authRoutes,
@@ -44,6 +45,7 @@ app.use(
 // Rotte
 app.use("/api/events", eventRoutes);
 app.use("/api/locations", locationRoutes);
+app.use("/api/categories", categoryRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api", uploadRoutes);

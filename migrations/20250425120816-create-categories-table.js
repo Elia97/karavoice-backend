@@ -3,8 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Tabella Users
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("categories", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.literal("uuid_generate_v4()"),
@@ -12,26 +11,18 @@ module.exports = {
         allowNull: false,
       },
       name: {
-        type: Sequelize.STRING(100),
-        allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(255),
         allowNull: false,
         unique: true,
       },
-      password: {
+      slug: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        unique: true,
+      },
+      icon: {
         type: Sequelize.STRING(255),
         allowNull: false,
-      },
-      role: {
-        type: Sequelize.STRING(50),
-        allowNull: false,
-        defaultValue: "user",
-      },
-      last_login_at: {
-        type: Sequelize.DATE,
-        allowNull: true,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -51,6 +42,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("categories");
   },
 };

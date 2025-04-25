@@ -30,6 +30,41 @@ class User extends BaseModel {
             },
           },
         },
+        email_verified_at: {
+          type: DataTypes.DATE,
+          allowNull: true,
+        },
+        phone: {
+          type: DataTypes.STRING(20),
+          allowNull: true,
+          validate: {
+            isNumeric: {
+              msg: "Il numero di telefono deve contenere solo numeri.",
+            },
+            len: {
+              args: [10, 20],
+              msg: "Il numero di telefono deve essere lungo tra 10 e 20 caratteri.",
+            },
+          },
+        },
+        address: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+          validate: {
+            notEmpty: {
+              msg: "L'indirizzo non può essere vuoto.",
+            },
+          },
+        },
+        city: {
+          type: DataTypes.STRING(100),
+          allowNull: true,
+          validate: {
+            notEmpty: {
+              msg: "La città non può essere vuota.",
+            },
+          },
+        },
         password: {
           type: DataTypes.STRING(255),
           allowNull: false,
@@ -72,15 +107,15 @@ class User extends BaseModel {
 
     // Hook per hash della password prima di creare l'utente
     this.addHook("beforeCreate", async (user) => {
-      if (user.password_hashed) {
-        user.password_hashed = await bcrypt.hash(user.password_hashed, 10);
+      if (user.password) {
+        user.password = await bcrypt.hash(user.password, 10);
       }
     });
 
     // Hook per hash della password prima di aggiornare l'utente
     this.addHook("beforeUpdate", async (user) => {
-      if (user.changed("password_hashed")) {
-        user.password_hashed = await bcrypt.hash(user.password_hashed, 10);
+      if (user.changed("password")) {
+        user.password = await bcrypt.hash(user.password, 10);
       }
     });
   }
@@ -96,7 +131,7 @@ class User extends BaseModel {
    * Verifica se la password fornita è valida.
    */
   async isPasswordValid(password) {
-    return bcrypt.compare(password, this.password_hashed);
+    return bcrypt.compare(password, this.password);
   }
 
   /**
