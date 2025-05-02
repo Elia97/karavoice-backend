@@ -8,6 +8,7 @@ const {
   userRoutes,
   authRoutes,
   uploadRoutes,
+  adminRoutes,
 } = require("./routes");
 const path = require("path");
 const cors = require("cors");
@@ -37,19 +38,20 @@ app.use(
   express.static(path.join(__dirname, "uploads"), {
     setHeaders: (res) => {
       res.set("Cross-Origin-Resource-Policy", "cross-origin");
-      res.set("Access-Control-Allow-Origin", "http://localhost:5173");
+      res.set("Access-Control-Allow-Origin", "http://localhost:3000");
     },
   })
 ); // Serve i file statici dalla cartella "uploads"
 
 // Rotte
+app.use("/auth", authRoutes);
+app.use("/api", adminRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api", uploadRoutes);
-app.use("/auth", authRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.get("/", (_, res) => {
   res.status(200).json({

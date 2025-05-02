@@ -47,11 +47,43 @@ exports.loginUser = async (req, res) => {
       { expiresIn: process.env.JWT_EXPIRES_IN || "1d" } // Imposta la scadenza, usa il valore di default se non specificato
     );
 
-    res.status(200).json({ message: "Login successful", token });
+    res.cookie("token", token, {
+      httpOnly: true, // Imposta il cookie come httpOnly per sicurezza
+      secure: process.env.NODE_ENV === "production", // Imposta il flag secure in produzione
+      maxAge: 7 * 24 * 60 * 60 * 1000, // Scadenza del cookie (7 giorni)
+      sameSite: "Strict", // Imposta SameSite per prevenire CSRF
+
+    })
+
+    res.status(200).json({ message: "Login successful"});
   } catch (error) {
     res.status(500).json({ message: "Error during login", error: error });
   }
 };
+
+exports.getMe = async (req, res) => {
+  try {
+    const userId = req.user.id; // ID dell'utente autenticato
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["password"] }, // Escludi la password dall'output
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user data", error });
+  }
+};
+
+exports.logoutUser = async (req, res) => {
+  try {
+    res.clearCookie("token", { path: "/" });
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Error during logout", error });
+  }
+}
 
 // Cambiare la password
 exports.changePassword = async (req, res) => {

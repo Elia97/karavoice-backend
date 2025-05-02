@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const eventController = require("../controllers/eventController");
-const {
-  validateToken,
-  validateTokenAdmin,
-} = require("../middlewares/authMiddleware");
+const { validateTokenAdmin } = require("../middlewares/authMiddleware");
 
 // Rotte pubbliche
 router.get("/upcoming", eventController.getUpcomingEvents); // Ottieni eventi futuri

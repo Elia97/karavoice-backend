@@ -20,6 +20,15 @@ class Category extends BaseModel {
             },
           },
         },
+        description: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: "La descrizione non può essere vuota."
+            }
+          }
+        },
         slug: {
           type: DataTypes.STRING(255),
           allowNull: true,
@@ -35,6 +44,15 @@ class Category extends BaseModel {
             len: {
               args: [3, 255],
               msg: "L'icona deve essere tra 3 e 255 caratteri.",
+            },
+          },
+        },
+        image: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+          validate: {
+            isUrl: {
+              msg: "L'immagine deve essere un URL valido.",
             },
           },
         },

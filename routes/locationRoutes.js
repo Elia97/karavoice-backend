@@ -8,7 +8,7 @@ const {
 const { validateLocation } = require("../middlewares/locationMiddleware");
 
 // Rotte per le locazioni
-router.get("/", validateTokenAdmin, locationController.getAllLocations); // Ottieni tutte le locazioni
+router.get("/", locationController.getAllLocations); // Ottieni tutte le locazioni
 
 router.get(
   "/by-city/:city",

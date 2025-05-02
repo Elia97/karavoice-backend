@@ -40,6 +40,23 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: true,
       },
+      bio: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      avatar: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+      },
+      date_of_birth: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
+      preferences: {
+        type: Sequelize.JSONB,
+        allowNull: false,
+        defaultValue: {},
+      },
       password: {
         type: Sequelize.STRING(255),
         allowNull: false,

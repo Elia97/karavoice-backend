@@ -7,6 +7,9 @@ const {
   validateToken,
 } = require("../middlewares/authMiddleware");
 
+router.get("/logout", authController.logoutUser); // Logout
+router.get("/me", validateToken, authController.getMe); // Ottieni informazioni sull'utente autenticato
+
 // Rotte per l'autenticazione
 router.post("/register", validateRegister, authController.registerUser); // Registrazione
 router.post("/login", validateLogin, authController.loginUser); // Login

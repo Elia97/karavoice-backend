@@ -5,6 +5,7 @@ const bookingRoutes = require("./bookingRoutes");
 const userRoutes = require("./userRoutes");
 const authRoutes = require("./authRoutes");
 const uploadRoutes = require("./uploadRoutes");
+const adminRoutes = require("./adminRoutes");
 
 module.exports = {
   eventRoutes,
@@ -14,4 +15,5 @@ module.exports = {
   userRoutes,
   authRoutes,
   uploadRoutes,
+  adminRoutes,
 };

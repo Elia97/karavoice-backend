@@ -15,12 +15,20 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
       slug: {
         type: Sequelize.STRING(255),
         allowNull: true,
         unique: true,
       },
       icon: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      image: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },

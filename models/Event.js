@@ -51,8 +51,8 @@ class Event extends BaseModel {
           type: DataTypes.STRING(255),
           allowNull: false,
           validate: {
-            isUrl: {
-              msg: "L'immagine deve essere un URL valido.",
+            notEmpty: {
+              msg: "L'immagine è obbligatoria.",
             },
           },
         },
@@ -116,6 +116,18 @@ class Event extends BaseModel {
         ],
       }
     );
+
+    this.addHook("beforeCreate", (event) => {
+      if (event.date instanceof Date) {
+        event.date = event.date.toISOString().split("T")[0];
+      }
+    });
+
+    this.addHook("beforeUpdate", (event) => {
+      if (event.date instanceof Date) {
+        event.date = event.date.toISOString().split("T")[0];
+      }
+    });
   }
 
   static associate(models) {

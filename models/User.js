@@ -65,6 +65,46 @@ class User extends BaseModel {
             },
           },
         },
+        bio: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+        },
+        avatar: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+          validate: {
+            isUrl: {
+              msg: "L'avatar deve essere un URL valido.",
+            }
+          }
+        },
+        date_of_birth: {
+          type: DataTypes.DATE,
+          allowNull: true,
+          validate: {
+            isDate: {
+              msg: "La data di nascita deve essere una data valida.",
+            },
+            isBefore: {
+              args: new Date(),
+              msg: "La data di nascita non può essere futura.",
+            }
+          }
+        },
+        preferences: {
+          type: DataTypes.JSONB,
+          allowNull: false,
+          defaultValue: {},
+          validate: {
+            isValideJson(value) {
+              try {
+                JSON.stringify(value);
+              } catch (error) {
+                throw new Error("Le preferenze devono essere un JSON valido.")
+              }
+            }
+          },
+        },
         password: {
           type: DataTypes.STRING(255),
           allowNull: false,

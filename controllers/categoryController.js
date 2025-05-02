@@ -23,10 +23,7 @@ exports.getAllCategories = async (req, res) => {
     });
 
     const formattedCategories = categories.map((category) => ({
-      id: category.id,
-      name: category.name,
-      slug: category.slug,
-      icon: category.icon,
+      ...category.dataValues,
       eventCount: Number(category.get("eventCount")) || 0, // usa `.get()` per accedere a valori aliasati
     }));
 
